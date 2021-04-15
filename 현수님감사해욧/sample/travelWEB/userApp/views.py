@@ -6,7 +6,7 @@ from .models import *
 
 # Create your views here.
 
-#------------<landing / login>------------#
+#------------<landing page>------------#
 def index(request):
     request.session['ID'] = {}
     request.session['login'] = 'N'
@@ -27,6 +27,49 @@ def login(request):
             return render(request, 'index.html', {'error' : 'username or password is incorrect.'})
     else:
         return render(request, 'index.html')
+
+
+#------------<login 확인>------------#
+def loginCheck(request):
+    print('loginCheck')
+    template_name = 'index.html'
+    request.session['loginOk'] = False
+    try:
+        data = request.POST
+        inputId = data['userid']
+        inputPassword = data['password']
+
+    except (KeyError, inputId == "", inputPassword == "") :
+        context = {
+            "userid" : "empty",
+            "password" : "empty",
+        }
+        return render(request, template_name, context)
+    else :
+        if User.objects.filter(ID= inputId).exists():
+            getUser = User.objects.get(ID = inputId)
+            if getUser.PW == inputPassword :
+                request.session['login'] = 'Y'
+                request.session['userid'] = inputId
+                context = {
+                    "login" : 'Y' ,
+                    "result" : "로그인 성공"
+                }
+            else :
+                request.session['login'] = 'N'
+                request.session['userid'] = ""
+                context = {
+                    "login": 'N',
+                    "result" : "비밀번호가 틀렸습니다"
+                }
+        else :
+            request.session['loginOk'] = 'N'
+            context = {
+                "login": 'N',
+                "result" : "존재하지 않는 id입니다"
+            }
+        print('context', context)
+        return HttpResponse(json.dumps(context), content_type="application/json")
 
 
 #------------<logout>------------#
@@ -56,19 +99,22 @@ def signup(request) :
         register = User(ID=id, PW=pwd, Name=name, Age=age, Phone=phone, Address=address, Sex=sex)
 
         register.save()
+    return render(request, 'survey1.html')
+
+
+#------------<SNS 회원가입>------------#
+def sns(request) :
     return render(request, 'index.html')
 
 
-# class UserManager(BaseUserManager):
-#     use_in_migrations = True
-#
-#     def create_user(self, email, nickname, password=None):
-#         if not email:
-#             raise ValueError('must have user email')
-#         user = self.model(
-#             email=self.normalize_email(email),
-#             nickname=nickname
-#         )
-#         user.set_password(password)
-#         user.save(using=self._db)
-#         return user
+#------------<survey page>------------#
+def survey(request) :
+    return render(request, 'survey1.html')
+
+def survey2(request) :
+    return render(request, 'survey2.html')
+
+
+#------------<recommend page>------------#
+def recommend(request) :
+    return render(request, 'recommend.html')
