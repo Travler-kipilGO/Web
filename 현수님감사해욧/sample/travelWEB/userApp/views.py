@@ -89,6 +89,8 @@ def signupForm(request) :
 def signup(request) :
     if request.method == 'POST' :
         id = request.POST['new_id']
+        mail = request.POST['mail']
+
         pwd = request.POST['new_pwd']
         name = request.POST['new_name']
         age = request.POST['new_age']
@@ -96,7 +98,7 @@ def signup(request) :
         phone = request.POST['new_phone']
         address = request.POST['new_address']
 
-        register = User(ID=id, PW=pwd, Name=name, Age=age, Phone=phone, Address=address, Sex=sex)
+        register = User(ID=id+mail, PW=pwd, Name=name, Age=age, Phone=phone, Address=address, Sex=sex)
 
         register.save()
     return render(request, 'survey1.html')
@@ -109,12 +111,21 @@ def sns(request) :
 
 #------------<survey page>------------#
 def survey(request) :
+    if request.method == 'POST' :
+        season = request.POST['season']
+        partner = request.POST['partner']
+        theme = request.POST['theme']
+
+        surveys = Survey(Season=season, Partner=partner, Theme=theme)
+
+        surveys.save()
     return render(request, 'survey1.html')
+
 
 def survey2(request) :
     return render(request, 'survey2.html')
 
-
 #------------<recommend page>------------#
 def recommend(request) :
     return render(request, 'recommend.html')
+

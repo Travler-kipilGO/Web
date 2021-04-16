@@ -38,6 +38,23 @@ sex_choice = {
     ('S01', '남자'),
     ('S02', '여자'),
 }
+
+
+theme_choice = {
+    ('T01', '자연관광지'),
+    ('T02', '역사관광지'),
+    ('T03', '휴양관광지'),
+    ('T04', '체험관광지'),
+    ('T05', '문화시설'),
+    ('T06', '축제'),
+    ('T07', '공연/행사'),
+    ('T08', '레포츠'),
+    ('T09', '쇼핑'),
+    ('T10', '맛집'),
+    ('T11', '숙박'),
+}
+
+
 #----------------------< User >----------------------#
 class User(models.Model) :
     Name    = models.CharField(max_length=10, verbose_name='이름')
@@ -50,3 +67,14 @@ class User(models.Model) :
 
     def __str__(self):
         return self.Name+" , "+self.ID+" , "+self.PW+" , "+self.Sex+" , "+self.Age+" , "+self.Phone+" , "+self.Address
+
+
+#----------------------< 설문조사 >----------------------#
+class Survey(models.Model) :
+    Season  = models.CharField(max_length=10, verbose_name='계절')
+    Partner = models.CharField(max_length=10, verbose_name='파트너')
+    Theme   = models.CharField(max_length=10, verbose_name='테마', choices=theme_choice)
+
+    def __str__(self):
+        return self.Season + " , " + self.Partner + " , " + self.Theme
+
