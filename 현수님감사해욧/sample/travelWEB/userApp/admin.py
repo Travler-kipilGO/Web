@@ -4,3 +4,6 @@ from .models import *
 
 admin.site.register(User)
 admin.site.register(Survey)
+admin.site.register(Developer)
+admin.site.register(Question)
+admin.site.register(Choice)

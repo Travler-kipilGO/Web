@@ -78,3 +78,17 @@ class Survey(models.Model) :
     def __str__(self):
         return self.Season + " , " + self.Partner + " , " + self.Theme
 
+
+#----------------------< MBTI >----------------------#
+class Developer(models.Model) :
+    name = models.CharField(max_length=50)
+    count = models.IntegerField(default=0)
+
+class Question(models.Model) :
+    number = models.IntegerField(unique=True)
+    content = models.CharField(max_length=100)
+
+class Choice(models.Model) :
+    content = models.CharField(max_length=100)
+    question = models.ForeignKey(to='userApp.Question', on_delete=models.CASCADE)
+    developer = models.ForeignKey(to='userApp.Developer', on_delete=models.CASCADE, null=True)

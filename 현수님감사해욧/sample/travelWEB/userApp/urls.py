@@ -10,7 +10,9 @@ urlpatterns = [
     path('signup/',     views.signup,     name='signup'),
     path('loginCheck/', views.loginCheck, name='loginCheck'),
     path('survey/',     views.survey,     name='survey'),
-    path('survey2/',    views.survey2,    name='survey2'),
     path('recommend/',  views.recommend,  name='recommend'),
     path('sns/',        views.sns,        name='sns'),
+    path('mbti/',       views.mbti,       name='mbti'),
+    path('form/',       views.form,       name='form'),
+
 ]

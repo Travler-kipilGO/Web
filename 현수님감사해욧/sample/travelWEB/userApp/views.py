@@ -101,7 +101,7 @@ def signup(request) :
         register = User(ID=id+mail, PW=pwd, Name=name, Age=age, Phone=phone, Address=address, Sex=sex)
 
         register.save()
-    return render(request, 'survey1.html')
+    return render(request, 'survey.html')
 
 
 #------------<SNS 회원가입>------------#
@@ -112,20 +112,32 @@ def sns(request) :
 #------------<survey page>------------#
 def survey(request) :
     if request.method == 'POST' :
-        season = request.POST['season']
-        partner = request.POST['partner']
-        theme = request.POST['theme']
+        season = request.POST['answer_1']
+        partner = request.POST['answer_2']
+        theme = request.POST['answer_3']
 
         surveys = Survey(Season=season, Partner=partner, Theme=theme)
 
         surveys.save()
-    return render(request, 'survey1.html')
+    return render(request, 'index.html')
 
-
-def survey2(request) :
-    return render(request, 'survey2.html')
 
 #------------<recommend page>------------#
 def recommend(request) :
     return render(request, 'recommend.html')
 
+
+#------------<MBTI page>------------#
+def mbti(request) :
+    developers = Developer.objects.all()
+    context = {
+        'developers' : developers
+    }
+    return render(request, 'mbti.html', context=context)
+
+def form(request) :
+    questions = Question.objects.all()
+    context = {
+        'questions' : questions
+    }
+    return render(request, 'form.html', context=context)
